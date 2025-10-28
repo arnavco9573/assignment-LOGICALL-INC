@@ -9,6 +9,11 @@ import { Plus, Film } from "lucide-react"
 function App() {
   return (
     <>
+      <div className="bg-yellow-100 dark:bg-yellow-900/30 p-2 text-center text-xs text-yellow-800 dark:text-yellow-300">
+        <p>
+          ⏳ **Note:** The live demo uses a free backend that may spin down. The first load might take up to 50 seconds.
+        </p>
+      </div>
       <div className="min-h-screen from-background via-background to-muted/20">
         <main className="container mx-auto px-4 py-6 md:px-6 md:py-8 lg:px-8 lg:py-10 w-full max-w-[95%] xl:max-w-[1400px]">
           {/* --- Header Section --- */}

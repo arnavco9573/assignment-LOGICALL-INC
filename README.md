@@ -3,7 +3,7 @@
 A full-stack web application built for an internship assignment. It allows users to manage a list of their favorite movies and TV shows with a feature-rich dashboard, infinite scrolling, and full CRUD functionality.
 
 The project is contained in this monorepo with two folders:
-* `/backend`: The Express, Prisma, and MySQL API.
+* `/backend`: The Express, Prisma, and MySQL API (on the `main` branch).
 * `/frontend`: The React, Vite, and Shadcn UI.
 
 ---
@@ -12,14 +12,13 @@ The project is contained in this monorepo with two folders:
 
 A live demo of the frontend is deployed on **Vercel**:
 
-**[https://your-frontend-demo-url.com](https://your-frontend-demo-url.com)**
-*(You will need to deploy your frontend to Vercel/Netlify and paste the link here)*
+**[https://assignment-logicall-inc.vercel.app/](https://assignment-logicall-inc.vercel.app/)**
 
-### ⚠️ A Note on the Live Demo Database
+### ⚠️ Important Notes on the Live Demo
 
-* This project's assignment requirement is to use **MySQL**. The backend code in this repository is configured for **MySQL**.
-* For the live demo, a **free Postgres (Neon)** database is being used as a substitute, as free hosted MySQL instances are no longer readily available.
-* To run this project as intended, please follow the **Local Setup** instructions below to use MySQL.
+* **MySQL Requirement:** This project's assignment requirement is to use **MySQL**. The code on the `main` branch uses MySQL.
+* **Demo Database:** For the live demo deployment, the `deploy` branch uses a **free Postgres (Neon)** database as a substitute, due to the lack of free hosted MySQL options.
+* **Initial Load Time:** The backend is hosted on Render's free tier, which **spins down after inactivity**. The **first request** to load data might take **up to 50 seconds** while the server restarts. Subsequent requests will be fast. ⏳
 
 ---
 
@@ -35,22 +34,31 @@ A live demo of the frontend is deployed on **Vercel**:
 
 ---
 
-## 🛠️ Tech Stack
+## 🌳 Branches
 
-| Backend | Frontend |
-| :--- | :--- |
-| Node.js | React (Vite) |
-| Express | TypeScript |
-| **MySQL** | **Tailwind CSS v4** |
-| Prisma (ORM) | **Shadcn UI** |
-| Zod (Validation) | TanStack Query (React Query) |
-| | React Hook Form |
+* **`main`:** Contains the code configured for **MySQL**, as required by the assignment. Use this branch for local development and submission review.
+* **`deploy`:** Contains modified backend code configured for **Postgres (Neon)**, used *only* for the live demo deployment on Render.
 
 ---
 
-## 📦 Local Setup & Installation
+## 🛠️ Tech Stack
 
-To run this project, you will need to run both the `backend` and `frontend` servers in two separate terminals.
+| Backend (`main` branch) | Frontend             |
+| :---------------------- | :------------------- |
+| Node.js                 | React (Vite)         |
+| Express                 | TypeScript           |
+| **MySQL** | **Tailwind CSS v4** |
+| Prisma (ORM)            | **Shadcn UI** |
+| Zod (Validation)        | TanStack Query (React Query) |
+|                         | React Hook Form      |
+|                         | Axios                |
+|                         | `lucide-react` (Icons) |
+
+---
+
+## 📦 Local Setup & Installation (Using MySQL)
+
+Make sure you are on the `main` branch (`git checkout main`). To run this project locally, you will need to run both the `backend` and `frontend` servers in two separate terminals.
 
 ### 1. Backend (Requires Local MySQL)
 
@@ -75,7 +83,7 @@ To run this project, you will need to run both the `backend` and `frontend` serv
     ```env
     # backend/.env
     DATABASE_URL="mysql://USER:PASSWORD@HOST:PORT/movie_db"
-    
+
     # Example for a default local MySQL:
     # DATABASE_URL="mysql://root:your_password_here@localhost:3306/movie_db"
     ```
@@ -120,3 +128,29 @@ To run this project, you will need to run both the `backend` and `frontend` serv
     ✅ **App will be running at `http://localhost:5173`**
 
 You can now open `http://localhost:5173` in your browser.
+
+---
+
+## 🚀 Deployment Instructions
+
+### Frontend (Vercel / Netlify)
+
+Deploy the frontend from the **`main` branch**.
+
+* **Framework Preset:** `Vite`
+* **Root Directory:** `frontend`
+* **Build Command:** `npm run build`
+* **Output Directory:** `dist`
+* **Environment Variables:**
+    * `VITE_BACKEND_URL`: (Your live Render backend URL, e.g., `https://movie-backend-assignment.onrender.com/api`)
+
+### Backend (Render)
+
+Deploy the backend from the **`deploy` branch**.
+
+* **Branch:** `deploy`
+* **Root Directory:** `backend`
+* **Build Command:** `npm install`
+* **Start Command:** `npx prisma generate && npm run dev`
+* **Environment Variables:**
+    * `DATABASE_URL`: (Your **Neon Postgres** connection string)
